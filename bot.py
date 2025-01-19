@@ -62,7 +62,7 @@ def start_message(message):
 
 @bot.message_handler(commands=['dream'])
 def prompt_request(message):
-    bot.reply_to(message, "GÜZEL ŞİMDİ RÜYANI DÜŞLE [ AMA İNGİLİZCE DİLİ OLARAK DÜŞLE ]")
+    bot.reply_to(message, "GÜZEL, ŞİMDİ RÜYANI\n\n[ İNGİLİZCE DİLİ OLARAK DÜŞLE ]")
 
 @bot.message_handler(func=lambda message: True)
 def process_prompt(message):
