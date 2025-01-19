@@ -6,7 +6,7 @@ import base64
 from telebot import types
 
 TOKEN = "7702772691:AAHhn6YP7C5DQcxMxuPlFAYPQRl267EnOXU"
-bot = telebot.TeleBot(TOKEN, timeout=60)  # Timeout 60 saniyeye çıkarıldı.
+bot = telebot.TeleBot(TOKEN)
 
 def generate(prompt, width, height, model):
     url = "https://create.thena.workers.dev/create_image_thena_v5"
@@ -106,4 +106,4 @@ def process_prompt(message):
         bot.reply_to(message, f"Hata oluştu: {str(e)}")
 
 print("Bot çalışıyor...")
-bot.polling(timeout=60)  # Timeout artırıldı.
+bot.polling(none_stop=True, interval=0, timeout=60)  # Timeout artırıldı, polling ayarlandı
