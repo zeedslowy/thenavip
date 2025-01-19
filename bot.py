@@ -56,13 +56,13 @@ def start_message(message):
     bot.reply_to(
         message,
         "Merhaba! Ben bir görsel işleme botuyum. Bana hayalindeki bir sahneyi tarif et ve sana özel bir görsel göndereyim.\n\nKomutlar:\n"
-        "/dream - Prompt girerek görsel oluştur.",
+        "/dream",
         reply_markup=keyboard  # Butonları mesajın altına ekliyoruz
     )
 
 @bot.message_handler(commands=['dream'])
 def prompt_request(message):
-    bot.reply_to(message, "Hayalindeki sahneyi bana tarif et! (örn: '/dream a dream girl in a forest')")
+    bot.reply_to(message, "GÜZEL ŞİMDİ RÜYANI DÜŞLE [ AMA İNGİLİZCE DİLİ OLARAK DÜŞLE ]")
 
 @bot.message_handler(func=lambda message: True)
 def process_prompt(message):
