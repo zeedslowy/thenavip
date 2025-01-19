@@ -49,14 +49,18 @@ def save_image(base64_data, file_name):
 def start_message(message):
     # Butonlar için inline keyboard oluşturuluyor
     keyboard = types.InlineKeyboardMarkup()
+
+    # Butonlar
     button1 = types.InlineKeyboardButton(text="♂️ SAHİP", url="https://t.me/ViosCeo")
-    button2 = types.InlineKeyboardButton(text="💬 KANAL", url="https://t.me/ViosTsam")
-    keyboard.add(button1, button2)
+    button2 = types.InlineKeyboardButton(text="🗨️ KANAL", url="https://t.me/ViosTsam")
+    button3 = types.InlineKeyboardButton(text="📕 Komutlar", callback_data="help")
+
+    keyboard.add(button1, button2, button3)
 
     bot.reply_to(
         message,
-        "Merhaba! Ben bir görsel işleme botuyum. Bana hayalindeki bir sahneyi tarif et ve sana özel bir görsel göndereyim.\n\nKomutlar:\n"
-        "/dream",
+        "Merhaba! Ben bir görsel işleme botuyum. Bana hayalindeki bir sahneyi tarif et ve sana özel bir görsel göndereyim.\n\n"
+        "Aşağıdaki butonları kullanarak daha fazla bilgi alabilirsin:",
         reply_markup=keyboard  # Butonları mesajın altına ekliyoruz
     )
 
@@ -104,6 +108,17 @@ def process_prompt(message):
                 generated = True
     except Exception as e:
         bot.reply_to(message, f"Hata oluştu: {str(e)}")
+
+@bot.callback_query_handler(func=lambda call: call.data == "help")
+def help_message(call):
+    # Yardım mesajı
+    help_text = (
+        "Komutlar:\n"
+        "/dream - Rüyanı düşle ❤️\n\n"
+        "Hayalindeki sahneyi bana tarif et ve sana özel bir görsel göndereyim."
+    )
+    bot.answer_callback_query(call.id)
+    bot.send_message(call.message.chat.id, help_text)
 
 print("Bot çalışıyor...")
 bot.polling(none_stop=True, interval=0, timeout=60)  # Timeout artırıldı, polling ayarlandı
