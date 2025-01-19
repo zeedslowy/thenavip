@@ -5,7 +5,7 @@ import time
 import base64
 from telebot import types
 
-TOKEN = "7702772691:AAHhn6YP7C5DQcxMxuPlFAYPQRl267EnOXU"
+TOKEN = "7702772691:0000"  # TG BOT TOKEN
 bot = telebot.TeleBot(TOKEN)
 
 def generate(prompt, width, height, model):
