@@ -101,4 +101,11 @@ def control(id):
 
 Klavyenizde `I` İle Editleme Yapın İşiniz Bitince `esc` + `ctrl+c` Komut Olarak `:wq` Çıkmak İçinde `enter` Düğümleyin,
 
+<h3 align="center">
+    ─「 sᴜᴩᴩᴏʀᴛ 」─
+</h3>
 
+<p align="center">
+<a href="https://t.me/viosteam"><img src="https://img.shields.io/badge/-DESTEK%20Group-blue.svg?style=for-the-badge&logo=Telegram"></a>
+
+### ⫘⫘-ˋˏ ༻✿༺ ˎˊ-⫘⫘
