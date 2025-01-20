@@ -101,6 +101,11 @@ def control(id):
 
 Klavyenizde `I` İle Editleme Yapın İşiniz Bitince `esc` + `ctrl+c` Komut Olarak `:wq` Çıkmak İçinde `enter` Düğümleyin,
 
+### BAŞLATMAK,
+```
+bash startup
+```
+
 <h3 align="center">
     ─「 sᴜᴩᴩᴏʀᴛ 」─
 </h3>
