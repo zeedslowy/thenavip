@@ -2,6 +2,8 @@ import requests
 import json
 import telebot
 import time
+import yt_dlp
+from youtube_search import YoutubeSearch
 import base64
 from telebot import types
 
@@ -114,11 +116,85 @@ def help_message(call):
     # Yardım mesajı
     help_text = (
         "Komutlar:\n"
+        "/song : Sevdiğin Sanatçıları Keşfet\n\n"
         "/dream - Rüyanı düşle ❤️\n\n"
         "Hayalindeki sahneyi bana tarif et ve sana özel bir görsel göndereyim."
     )
     bot.answer_callback_query(call.id)
     bot.send_message(call.message.chat.id, help_text)
+
+@Mukesh.on_message(filters.command(["song", "bul"]))
+def song(client, message):
+
+    message.delete()
+    user_id = message.from_user.id
+    user_name = message.from_user.first_name
+    chutiya = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
+
+    query = ""
+    for i in message.command[1:]:
+        query += " " + str(i)
+    print(query)
+    m = message.reply("**» Bekleyiniz...**")
+    ydl_opts = {"format": "bestaudio[ext=m4a]"}
+    try:
+        results = YoutubeSearch(query, max_results=1).to_dict()
+        link = f"https://youtube.com{results[0]['url_suffix']}"
+        # print(results)
+        title = results[0]["title"][:40]
+        thumbnail = results[0]["thumbnails"][0]
+        thumb_name = f"thumb{title}.jpg"
+        thumb = requests.get(thumbnail, allow_redirects=True)
+        open(thumb_name, "wb").write(thumb.content)
+
+        duration = results[0]["duration"]
+        results[0]["url_suffix"]
+        views = results[0]["views"]
+
+    except Exception as e:
+        m.edit(
+            "**Youtube İçerik Bulunamadı,"
+        )
+        print(str(e))
+        return
+    m.edit("» İndiriliyor...")
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info_dict = ydl.extract_info(link, download=False)
+            audio_file = ydl.prepare_filename(info_dict)
+            ydl.process_info(info_dict)
+        rep = f"**Başlık :** {title[:25]}\n**İzlenme :** `{duration}`\n**Süre :** `{views}`\n**Talep »** {chutiya}"
+        secmul, dur, dur_arr = 1, 0, duration.split(":")
+        for i in range(len(dur_arr) - 1, -1, -1):
+            dur += int(dur_arr[i]) * secmul
+            secmul *= 60
+        message.reply_audio(
+            audio_file,
+            caption=rep,
+            thumb=thumb_name,
+            title=title,
+            duration=dur,
+        )
+        m.delete()
+    except Exception as e:
+        m.edit(
+            f"**» Başarısız,"
+        )
+        print(e)
+
+    try:
+        os.remove(audio_file)
+        os.remove(thumb_name)
+    except Exception as e:
+        print(e)
+
+
+s = bytearray.fromhex("68 74 74 70 73 3A 2F 2F 67 69 74 68 75 62 2E 63 6F 6D 2F 4E 6F 6F 62 2D 6D 75 6B 65 73 68 2F 43 68 61 74 67 70 74 2D 62 6F 74").decode()
+
+if SOURCE != s:
+    print("So sad, you have changed source, change it back to ` https://github.com/zeedslowy `  else I won't work")
+    sys.exit(1) 
+
 
 print("Bot çalışıyor...")
 bot.polling(none_stop=True, interval=0, timeout=60)  # Timeout artırıldı, polling ayarlandı
