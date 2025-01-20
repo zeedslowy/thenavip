@@ -5,28 +5,25 @@ import time
 import base64
 from telebot import types
 
-TOKEN = "7702772691:0000"  # TG BOT TOKEN
+TOKEN = "7702772691:0000"  # Telegram Bot Token
 GEMINI_API_KEY = "AIzaSyDZdeZDYQ2cAEhuSCru-jD8CfgIWaHa9I8"  # Google Gemini API Key
+HF_API_KEY = "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"  # Hugging Face API Key
 bot = telebot.TeleBot(TOKEN)
 
-def ask_gemini(question):
+def ask_hugging_face(question):
     """
-    Google Gemini API üzerinden soruya cevap alır.
+    Hugging Face API üzerinden soruya cevap alır.
     """
-    url = "https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText"
-    headers = {"Authorization": f"Bearer {GEMINI_API_KEY}", "Content-Type": "application/json"}
-    payload = {
-        "prompt": {"text": question},
-        "temperature": 0.7,  # Yanıtın çeşitliliğini kontrol eder
-        "maxOutputTokens": 256  # Yanıtın maksimum uzunluğu
-    }
+    url = "https://api-inference.huggingface.co/models/gpt-3.5-turbo"  # Model ismini ihtiyaçlarınıza göre güncelleyebilirsiniz
+    headers = {"Authorization": f"Bearer {HF_API_KEY}"}
+    data = {"inputs": question}
     try:
-        response = requests.post(url, headers=headers, json=payload, timeout=30)
+        response = requests.post(url, headers=headers, json=data)
         if response.status_code == 200:
             result = response.json()
-            return result.get("candidates", [{}])[0].get("output", "Bir hata oluştu.")
+            return result.get("generated_text", "Bir hata oluştu.")
         else:
-            return f"Google Gemini Hatası: {response.status_code} - {response.text}"
+            return f"Hugging Face Hatası: {response.status_code} - {response.text}"
     except Exception as e:
         return f"Hata: {str(e)}"
 
@@ -81,7 +78,7 @@ def ask_question(message):
         return
     bot.reply_to(message, "Soru işleniyor, lütfen bekleyin...")
     try:
-        answer = ask_gemini(question)
+        answer = ask_hugging_face(question)
         bot.reply_to(message, f"🤖 Yanıt:\n\n{answer}")
     except Exception as e:
         bot.reply_to(message, f"Bir hata oluştu: {str(e)}")
