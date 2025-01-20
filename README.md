@@ -25,6 +25,9 @@ kullanılabilirsiniz!
 
 <h2 align="center">[ APİ DÖKÜMAN ]</h2>
 
-### GEREKLİ KAYNAK VE KÜTÜPHANELER,
+### BELGELER,
 
-- [• DÖKÜMAN](https://thena.apidog.io/)
+- [• DÖKÜMAN ~](https://thena.apidog.io/)
+- [• APİ KEY ~](https://thena.apidog.io/create-api-key-754869m0)
+- [• MODELLLER ~](https://thena.apidog.io/thena-models-754138m0)
+- [• GET POST ~](https://thena.apidog.io/create-image-job-11915023e0)
